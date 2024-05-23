@@ -11,10 +11,14 @@ Todo's:
 
 '''
 FTS = False
-import pygame
+
+
+import pygame, Classes
+
+
 # Check if settings file exists.
 try:
-    SettingsList = open('settings.txt', 'r')
+    settingsList = open('settings.txt', 'r')
 
 # It doesnt.
 except:
@@ -22,9 +26,9 @@ except:
 
 # If settings file does exist.
 if FTS == True:
-    FirstTimeSetupTemplate = ['50,50,50', '\n400,400', '\n150,150,150']
+    firstTimeSetupTemplate = ['50,50,50', '\n400,400', '\n150,150,150']
     File = open('settings.txt', 'w')
-    File.writelines(FirstTimeSetupTemplate)
+    File.writelines(firstTimeSetupTemplate)
     bg_color = (50,50,50)
     width = 400
     height = 400
@@ -33,29 +37,29 @@ if FTS == True:
 # Otherwise...
 else:
     File = open('settings.txt', 'r')
-    SettingsContents = File.readlines()
+    settingsContents = File.readlines()
 
     # ICKY! str to tuple for background color.
-    tempVar = SettingsContents[0]
+    tempVar = settingsContents[0]
     bg_color = []
     for number in tempVar.split(','):
         bg_color.append(int(number))
     bg_color = tuple(bg_color)
 
     # Screen size extraction from settings.
-    ScreenSize = SettingsContents[1].split(',')
-    width = int(ScreenSize[0])
-    height = int(ScreenSize[1])
+    screenSize = settingsContents[1].split(',')
+    width = int(screenSize[0])
+    height = int(screenSize[1])
 
     # Line Color extraction from settings.
-    tempVar = SettingsContents[2]
+    tempVar = settingsContents[2]
     ln_color = []
     for number in tempVar.split(','):
         ln_color.append(int(number))
     ln_color = tuple(ln_color)
 
 
-class Button:
+
 
 
 # Res and BG setup.
@@ -70,11 +74,14 @@ pygame.display.flip()
 
 
 Running = True
+MouseClick = False
 MousePos = (0,0)
 MousePosX = 0
 MousePosY = 0
 MousePosXR = 0
 MousePosYR = 0
+
+btn = Classes.Button(30,30,ln_color,(130,130,130),(200,200,200),(60,60,60),10,10,screen,MousePosX,MousePosY, MouseClick)
 
 if FTS == True:
     while FTS == True:
@@ -105,10 +112,12 @@ while Running:
             MousePosXR = MousePos[0]/(height/10)
             MousePosYR = MousePos[1]/(height/10)
 
-    
+    MouseClick = pygame.mouse.get_pressed()
 
-
-
+    screen.fill(bg_color)
+    btn.Update(MousePosX,MousePosY,MouseClick[0])
+    btn.Draw()
+    print(btn.Return())
     pygame.display.flip()
 
     

@@ -1,0 +1,8 @@
+{
+    "git.enableSmartCommit": true,
+    "git.autofetch": true,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "git.confirmSync": false,
+    "window.zoomLevel": 1
+}
